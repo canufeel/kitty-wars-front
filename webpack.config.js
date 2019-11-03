@@ -7,7 +7,7 @@ module.exports = mode => ({
   devtool: 'cheap-eval-source-map',
   mode: 'development',
   entry: {
-    src: path.join(__dirname, 'src/index.js'),
+    src: ['@babel/polyfill', path.join(__dirname, 'src/index.js')],
   },
   output: {
     chunkFilename: '[name].js',
