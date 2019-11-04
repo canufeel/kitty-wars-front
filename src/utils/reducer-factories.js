@@ -2,9 +2,9 @@
 export const addItemsReducerFactory = ({
   initialState,
   addItemsActionType = null,
-  itemsSelector,
+  itemsSelector = action => action.data,
   addItemActionType = null,
-  itemSelector,
+  itemSelector = action => action.data,
   idPropNameGenerator = null,
   wrappedReducer = null,
   attachTimeTag = false,

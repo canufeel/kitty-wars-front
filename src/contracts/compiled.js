@@ -22,8 +22,8 @@ const allContracts = {
 const getAccount = () => window.ethereum.selectedAddress;
 
 const getPlayerState = async ({
-  [playerRepoContractName]: playerRepo,
-  [itemOwnershipContractName]: itemOwnership,
+
+
 }) => {
   const playerState = {
     players: [],
@@ -31,8 +31,8 @@ const getPlayerState = async ({
     weapons: [],
     battles: [],
   };
-  const itemEvents = await itemOwnership.getPastEvents('ItemForged');
-  const playerEvents = await playerRepo.getPastEvents('PlayerAdded');
+
+
   const weapons = [];
   const armors = [];
   if (itemEvents.length) {
@@ -57,20 +57,7 @@ const getPlayerState = async ({
   }
 
   const players = [];
-  if (playerEvents.length) {
-    for (event in playerEvents) {
-      const [
-        weaponId,
-        armorId,
-        kittyId,
-      ] = await playerRepo.getPlayer(event.returnValues.playerAddress);
-      players.push({
-        weaponId,
-        armorId,
-        kittyId,
-      });
-    }
-  }
+
 };
 
 const getAllContracts = async () => {
@@ -92,11 +79,42 @@ const getAllContracts = async () => {
 };
 
 export const getAllContractsAndAccount = async () => {
-  const account = getAccount();
-
   const contracts = await getAllContracts();
+  const account = getAccount();
   return {
     account,
     contracts,
   }
+};
+
+
+export const getItemEvents = async () => {
+  const {
+    [itemOwnershipContractName]: itemOwnership,
+  } = await getAllContracts();
+  const events = await itemOwnership.getPastEvents('ItemForged');
+  return events.map(evt => evt.returnValues);
+};
+
+export const getPlayers = async () => {
+  const {
+    [playerRepoContractName]: playerRepo,
+  } = await getAllContracts();
+  const events = await playerRepo.getPastEvents('PlayerAdded');
+  const players = [];
+  if (events.length) {
+    for (event in events) {
+      const [
+        weaponId,
+        armorId,
+        kittyId,
+      ] = await playerRepo.getPlayer(event.returnValues.playerAddress);
+      players.push({
+        weaponId,
+        armorId,
+        kittyId,
+      });
+    }
+  }
+  return players;
 };

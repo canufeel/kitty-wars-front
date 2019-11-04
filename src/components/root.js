@@ -1,36 +1,14 @@
-import React, { Component } from 'react';
-import { getAllContractsAndAccount } from '../contracts/compiled';
-import InventoryPage from './inventory-page';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { configureStore } from 'store/configure-store';
+import MainPage from './main-page';
 
-class Root extends Component {
-  state = {
-    contracts: {},
-    account: null,
-    kitty: null,
-    armor: null,
-    weapon: null,
-    fight: {
-      isFighting: null,
-      hasCommittedDamage: null,
-      hasResolvedDamage: null,
-    },
-  };
-  componentDidMount = async () => {
-    const newState = await getAllContractsAndAccount();
-    this.setState({
-      ...newState
-    });
-  };
+const store = configureStore();
 
-  render() {
-    return (
-      <div>
-        <p>{this.state.account} Hello from KittieWars</p>
-        <InventoryPage/>
-      </div>
-    );
-  }
-}
-
+const Root = () => (
+  <Provider store={store}>
+    <MainPage />
+  </Provider>
+);
 
 export default Root;

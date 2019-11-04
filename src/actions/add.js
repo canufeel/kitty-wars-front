@@ -25,7 +25,7 @@ export const addItemEvents = payloadActionCreator(
   types.ADD_ITEM_EVENTS
 );
 
-export const addContractEvents = payloadActionCreator(
+export const addContracts = payloadActionCreator(
   types.ADD_CONTRACTS
 );
 
