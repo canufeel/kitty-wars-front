@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
 import { getAllContractsAndAccount } from '../contracts/compiled';
+import InventoryPage from './inventory-page';
 
 class Root extends Component {
   state = {
     contracts: {},
     account: null,
+    kitty: null,
+    armor: null,
+    weapon: null,
+    fight: {
+      isFighting: null,
+      hasCommittedDamage: null,
+      hasResolvedDamage: null,
+    },
   };
   componentDidMount = async () => {
-    const state = await getAllContractsAndAccount();
+    const newState = await getAllContractsAndAccount();
     this.setState({
-      ...state
+      ...newState
     });
   };
 
   render() {
-    return (<div>Hello from KittieWars</div>);
+    return (
+      <div>
+        <p>{this.state.account} Hello from KittieWars</p>
+        <InventoryPage/>
+      </div>
+    );
   }
 }
 
