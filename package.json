@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --progress --port 3003 --config webpack.config.js --host 0.0.0.0 --hot"
+    "start": "webpack-dev-server --progress --port 3003 --config webpack.config.js --host 0.0.0.0 --hot && node src/assets/index.js"
   },
   "author": "",
   "license": "ISC",
